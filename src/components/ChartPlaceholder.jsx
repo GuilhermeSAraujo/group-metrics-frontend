@@ -2,6 +2,7 @@ import { Box, Flex, Text, Stack } from '@chakra-ui/react'
 import MessagesPerUserBarList from './MessagesPerUserBarList'
 import ReactionsPerUserBarList from './ReactionsPerUserBarList'
 import RepliesPerUserBarList from './RepliesPerUserBarList'
+import ChartBarListLoading from './ChartBarListLoading'
 
 const chartMeta = {
   messages_per_user: {
@@ -36,7 +37,7 @@ const colorMap = {
   teal: { bg: 'teal.50', border: 'teal.200', accent: 'teal.400', text: 'teal.700', badge: 'teal.100' },
 }
 
-export default function ChartPlaceholder({ chartType, label }) {
+export default function ChartPlaceholder({ chartType, label, queryString = '' }) {
   const meta = chartMeta[chartType] ?? chartMeta.messages_per_user
   const colors = colorMap[meta.color]
   const ChartComponent = meta.Component
@@ -77,7 +78,15 @@ export default function ChartPlaceholder({ chartType, label }) {
       >
         {ChartComponent ? (
           <Box px={{ base: 5, md: 8 }} py={6}>
-            <ChartComponent seriesColor={`${meta.color}.subtle`} />
+            {queryString ? (
+              <ChartComponent
+                key={`${chartType}-${queryString}`}
+                seriesColor={`${meta.color}.subtle`}
+                queryString={queryString}
+              />
+            ) : (
+              <ChartBarListLoading seriesColor={`${meta.color}.subtle`} />
+            )}
           </Box>
         ) : (
           <Flex

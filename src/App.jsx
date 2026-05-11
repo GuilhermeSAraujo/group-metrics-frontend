@@ -3,7 +3,7 @@ import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
 
 const CORRECT_PASSWORD = '!123'
-const STORAGE_KEY = 'app_password'
+const STORAGE_KEY = 'lstop-ts-key'
 
 function PasswordGate({ children }) {
   const [authenticated, setAuthenticated] = useState(

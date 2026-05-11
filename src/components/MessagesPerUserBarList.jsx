@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { BarList, useChart } from '@chakra-ui/charts'
 import { api } from '../api/client'
+import { withQueryString } from '../api/queryParams'
 import ChartBarListLoading from './ChartBarListLoading'
 
 /** Adapt `{ member_id, member_name, total }` rows into Chakra BarListData. */
@@ -14,7 +15,7 @@ function toBarListData(messages) {
     .filter((row) => row.value > 0)
 }
 
-export default function MessagesPerUserBarList({ seriesColor = 'purple.subtle' }) {
+export default function MessagesPerUserBarList({ seriesColor = 'purple.subtle', queryString = '' }) {
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
@@ -22,7 +23,7 @@ export default function MessagesPerUserBarList({ seriesColor = 'purple.subtle' }
     let cancelled = false
 
     api
-      .getJson('/count-messages-by-user')
+      .getJson(withQueryString('/count-messages-by-user', queryString))
       .then((payload) => {
         if (cancelled || !payload || typeof payload !== 'object') return
         setData(toBarListData(payload.messages))
@@ -37,7 +38,7 @@ export default function MessagesPerUserBarList({ seriesColor = 'purple.subtle' }
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [queryString])
 
   const chart = useChart({
     sort: { by: 'value', direction: 'desc' },

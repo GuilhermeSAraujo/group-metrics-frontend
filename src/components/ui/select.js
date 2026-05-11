@@ -7,6 +7,7 @@ export {
   SelectItemIndicator,
   SelectItemText,
   SelectLabel,
+  SelectPositioner,
   SelectRoot,
   SelectTrigger,
   SelectValueText,
