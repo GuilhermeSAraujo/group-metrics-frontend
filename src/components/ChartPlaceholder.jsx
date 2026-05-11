@@ -67,17 +67,6 @@ export default function ChartPlaceholder({ chartType, label }) {
             {meta.description}
           </Text>
         </Stack>
-        <Box
-          px={3}
-          py={1}
-          borderRadius="full"
-          bg={colors.badge}
-          fontSize="xs"
-          fontWeight="600"
-          color={colors.text}
-        >
-          {meta.type}
-        </Box>
       </Flex>
 
       {/* Chart body */}
