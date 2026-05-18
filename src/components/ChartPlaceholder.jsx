@@ -2,6 +2,7 @@ import { Box, Flex, Text, Stack } from '@chakra-ui/react'
 import MessagesPerUserBarList from './MessagesPerUserBarList'
 import ReactionsPerUserBarList from './ReactionsPerUserBarList'
 import RepliesPerUserBarList from './RepliesPerUserBarList'
+import MediasPerUserBarList from './MediasPerUserBarList'
 import ChartBarListLoading from './ChartBarListLoading'
 
 const chartMeta = {
@@ -28,6 +29,14 @@ const chartMeta = {
     xAxis: 'Users',
     yAxis: 'Replies Received',
     Component: RepliesPerUserBarList,
+  },
+  medias_per_user: {
+    type: 'Bar list',
+    color: 'yellow',
+    description: 'Mostra o número de medias enviadas por membro da LSTop.',
+    xAxis: 'Users',
+    yAxis: 'Medias Sent',
+    Component: MediasPerUserBarList,
   },
 }
 
