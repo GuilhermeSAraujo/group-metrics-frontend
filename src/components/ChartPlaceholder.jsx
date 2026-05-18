@@ -32,7 +32,7 @@ const chartMeta = {
   },
   medias_per_user: {
     type: 'Bar list',
-    color: 'yellow',
+    color: 'teal',
     description: 'Mostra o número de medias enviadas por membro da LSTop.',
     xAxis: 'Users',
     yAxis: 'Medias Sent',
