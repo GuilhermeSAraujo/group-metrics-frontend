@@ -14,7 +14,7 @@ function toBarListData(reactions) {
     .filter((row) => row.value > 0)
 }
 
-export default function MediasPerUserBarList({ seriesColor = 'yellow.subtle', queryString = '' }) {
+export default function MediasPerUserBarList({ seriesColor = 'yellow', queryString = '' }) {
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
