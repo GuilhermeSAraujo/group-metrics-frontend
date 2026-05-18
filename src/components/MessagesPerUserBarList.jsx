@@ -6,7 +6,6 @@ import ChartBarListLoading from './ChartBarListLoading'
 
 /** Adapt `{ member_id, member_name, total }` rows into Chakra BarListData. */
 function toBarListData(messages) {
-  if (!Array.isArray(messages)) return []
   return messages
     .map((row) => ({
       name: row?.member_name?.trim() || row?.member_id || 'Desconhecido - bugou :(',

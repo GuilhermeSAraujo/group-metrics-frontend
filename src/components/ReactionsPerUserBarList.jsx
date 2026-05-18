@@ -6,7 +6,6 @@ import ChartBarListLoading from './ChartBarListLoading'
 
 /** Adapt `{ member_id, member_name, total }` rows into Chakra BarListData. */
 function toBarListData(reactions) {
-  if (!Array.isArray(reactions)) return []
   return reactions
     .map((row) => ({
       name: row?.member_name?.trim() || row?.member_id || 'Unknown',
@@ -25,8 +24,8 @@ export default function ReactionsPerUserBarList({ seriesColor = 'blue.subtle', q
     api
       .getJson(withQueryString('/count-reactions-by-user', queryString))
       .then((payload) => {
-        if (cancelled || !payload || typeof payload !== 'object') return
-        setData(toBarListData(payload.reactions))
+        if (cancelled || !payload || !Array.isArray(reactions)) return
+        setData(toBarListData(payload))
       })
       .catch(() => {
         if (!cancelled) setData([])
