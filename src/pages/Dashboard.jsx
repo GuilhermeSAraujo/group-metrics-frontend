@@ -78,9 +78,9 @@ export default function Dashboard() {
       .then((data) => {
         if (cancelled || !data || typeof data !== 'object') return
         setDashboardMetrics({
-          messages: data['total-messages']?.[0]?.count ?? 0,
-          reactions: data['total-reactions']?.[0]?.count ?? 0,
-          replies: data['total-replies']?.[0]?.count ?? 0,
+          messages: data?.total_messages ?? 0,
+          reactions: data?.total_reactions ?? 0,
+          replies: data?.total_replies ?? 0,
         })
       })
       .catch(() => {
