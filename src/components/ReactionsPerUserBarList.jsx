@@ -24,7 +24,7 @@ export default function ReactionsPerUserBarList({ seriesColor = 'blue.subtle', q
     api
       .getJson(withQueryString('/count-reactions-by-user', queryString))
       .then((payload) => {
-        if (cancelled || !payload || !Array.isArray(reactions)) return
+        if (cancelled || !payload || !Array.isArray(payload)) return
         setData(toBarListData(payload))
       })
       .catch(() => {
