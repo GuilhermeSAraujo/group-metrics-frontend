@@ -6,7 +6,6 @@ import ChartBarListLoading from './ChartBarListLoading'
 
 /** Adapt `{ member_id, member_name, total }` rows into Chakra BarListData. */
 function toBarListData(replies) {
-  if (!Array.isArray(replies)) return []
   return replies
     .map((row) => ({
       name: row?.member_name?.trim() || row?.member_id || 'Unknown',
@@ -25,8 +24,8 @@ export default function RepliesPerUserBarList({ seriesColor = 'teal.subtle', que
     api
       .getJson(withQueryString('/count-replies-by-user', queryString))
       .then((payload) => {
-        if (cancelled || !payload || typeof payload !== 'object') return
-        setData(toBarListData(payload.replies))
+        if (cancelled || !payload || !Array.isArray(payload)) return
+        setData(toBarListData(payload))
       })
       .catch(() => {
         if (!cancelled) setData([])
