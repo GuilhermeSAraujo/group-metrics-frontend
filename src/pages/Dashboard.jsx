@@ -18,6 +18,7 @@ import { buildDateRangeQueryString, withQueryString } from '../api/queryParams'
 const chartOptions = createListCollection({
   items: [
     { label: 'Mensagens por Participante', value: 'messages_per_user' },
+    { label: 'Medias por Participante', value: 'medias_per_user' },
     { label: 'Reações recebidas', value: 'reactions_per_user' },
     { label: 'Respostas recebidas', value: 'replies_per_user' },
   ],
