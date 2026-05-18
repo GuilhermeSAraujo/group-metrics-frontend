@@ -25,8 +25,8 @@ export default function MessagesPerUserBarList({ seriesColor = 'purple.subtle', 
     api
       .getJson(withQueryString('/count-messages-by-user', queryString))
       .then((payload) => {
-        if (cancelled || !payload || typeof payload !== 'object') return
-        setData(toBarListData(payload.messages))
+        if (cancelled || !payload || !Array.isArray(payload)) return
+        setData(toBarListData(payload))
       })
       .catch(() => {
         if (!cancelled) setData([])
