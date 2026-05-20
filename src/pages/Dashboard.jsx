@@ -8,6 +8,7 @@ import {
   createListCollection,
   Stack,
   useBreakpointValue,
+  Spinner,
 } from '@chakra-ui/react'
 import { SelectContent, SelectItem, SelectPositioner, SelectRoot, SelectTrigger, SelectValueText } from '../components/ui/select'
 import Sidebar from '../components/Sidebar'
@@ -25,12 +26,15 @@ const chartOptions = createListCollection({
 })
 
 export default function Dashboard() {
+  const palette = 'gray'
+
   const [selectedChart, setSelectedChart] = useState(['messages_per_user'])
   const [dashboardMetrics, setDashboardMetrics] = useState(null)
   const [availableDateRange, setAvailableDateRange] = useState({ min: '', max: '' })
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const [dateFilterError, setDateFilterError] = useState(null)
+  const [loading, setIsLoading] = useState(true);
   const dateRangeQueryString = buildDateRangeQueryString(startDate, endDate)
 
   useEffect(() => {
@@ -74,6 +78,7 @@ export default function Dashboard() {
 
     let cancelled = false
 
+    setIsLoading(true);
     api
       .getJson(withQueryString('/dashboard-metrics', dateRangeQueryString))
       .then((data) => {
@@ -83,8 +88,10 @@ export default function Dashboard() {
           reactions: data?.total_reactions ?? 0,
           replies: data?.total_replies ?? 0,
         })
+        setIsLoading(false)
       })
       .catch(() => {
+        setIsLoading(false)
         if (!cancelled) setDashboardMetrics(null)
       })
 
@@ -279,12 +286,25 @@ export default function Dashboard() {
               borderWidth="1px"
               borderColor="gray.100"
             >
-              <Text fontSize="xs" color="gray.400" fontWeight="600" textTransform="uppercase" letterSpacing="0.08em">
-                {stat.label}
-              </Text>
-              <Text fontSize="2xl" fontWeight="800" color="gray.800" mt={1}>
-                {stat.value !== undefined ? stat.value : '—'}
-              </Text>
+              {loading ? (
+                <Spinner size="lg" color={`${palette}.500`} />
+              ) : (
+                <>
+                  <Text
+                    fontSize="xs"
+                    color="gray.400"
+                    fontWeight="600"
+                    textTransform="uppercase"
+                    letterSpacing="0.08em"
+                  >
+                    {stat.label}
+                  </Text>
+
+                  <Text fontSize="2xl" fontWeight="800" color="gray.800" mt={1}>
+                    {stat.value ?? '—'}
+                  </Text>
+                </>
+              )}
             </Box>
           ))}
         </Flex>

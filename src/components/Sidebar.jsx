@@ -1,13 +1,14 @@
 import { Box, Flex, Text, Stack } from '@chakra-ui/react'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const navItems = [
-  { label: 'Dashboard', icon: '▦', active: true },
-  // { label: 'Members', icon: '◎', active: false },
-  // { label: 'Channels', icon: '⊞', active: false },
-  // { label: 'Settings', icon: '⚙', active: false },
+  { label: 'Dashboard', icon: '📈', path: '/dashboard' },
+  { label: 'Grupo',     icon: '📊', path: '/group'     },
 ]
 
 export default function Sidebar() {
+  const navigate = useNavigate()
+  const location = useLocation()
   return (
     <Box
       w={{ base: '0', md: '220px' }}
@@ -50,14 +51,19 @@ export default function Sidebar() {
             px={3}
             py={2.5}
             borderRadius="xl"
-            bg={item.active ? 'purple.50' : 'transparent'}
-            color={item.active ? 'purple.700' : 'gray.500'}
-            fontWeight={item.active ? '600' : '400'}
+            bg={
+              location.pathname === item.path
+                ? 'purple.50' : 'transparent'}
+            onClick={() => {
+              console.log("clicouuuu", item.path)
+              navigate(item.path)}}
+            color={location.pathname === item.path ? 'purple.700' : 'gray.500'}
+            fontWeight={location.pathname === item.path ? '600' : '400'}
             fontSize="sm"
             cursor="pointer"
             _hover={{
-              bg: item.active ? 'purple.50' : 'gray.50',
-              color: item.active ? 'purple.700' : 'gray.700',
+              bg: location.pathname === item.path ? 'purple.50' : 'gray.50',
+              color: location.pathname === item.path ? 'purple.700' : 'gray.700',
             }}
             transition="all 0.15s"
           >

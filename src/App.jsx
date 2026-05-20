@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
+import Group from './pages/Group'
 
 const CORRECT_PASSWORD = '!123'
 const STORAGE_KEY = 'lstop-ts-key'
@@ -91,6 +92,7 @@ export default function App() {
       <HashRouter>
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/group" element={<Group />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </HashRouter>

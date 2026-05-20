@@ -7,6 +7,14 @@ export function buildDateRangeQueryString(startDate, endDate) {
   }).toString()
 }
 
+export function buildDateQueryString(date) {
+  if (!date) return ''
+
+  return new URLSearchParams({
+    'date': date
+  }).toString()
+}
+
 export function withQueryString(endpoint, queryString) {
   if (!queryString) return endpoint
 

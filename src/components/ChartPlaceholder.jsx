@@ -4,6 +4,7 @@ import ReactionsPerUserBarList from './ReactionsPerUserBarList'
 import RepliesPerUserBarList from './RepliesPerUserBarList'
 import MediasPerUserBarList from './MediasPerUserBarList'
 import ChartBarListLoading from './ChartBarListLoading'
+import MessagesByHourLineChart from './MessagesByHourLineChart'
 
 const chartMeta = {
   messages_per_user: {
@@ -37,6 +38,14 @@ const chartMeta = {
     xAxis: 'Users',
     yAxis: 'Medias Sent',
     Component: MediasPerUserBarList,
+  },
+  hour_activity: {
+    type: 'Line chart',
+    color: 'teal',
+    description: 'Mostra o número de mensagens enviadas por hora na LSTop.',
+    xAxis: 'Hours',
+    yAxis: 'Messages sent',
+    Component: MessagesByHourLineChart,
   },
 }
 
