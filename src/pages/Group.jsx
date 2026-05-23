@@ -34,6 +34,7 @@ export default function Group() {
     const chartOptions = createListCollection({
         items: [
             { label: 'Atividade por hora', value: 'hour_activity' },
+            { label: 'Reações mais usadas', value: 'most_used_reactions' },
         ],
     })
 

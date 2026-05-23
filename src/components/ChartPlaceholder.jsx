@@ -5,6 +5,7 @@ import RepliesPerUserBarList from './RepliesPerUserBarList'
 import MediasPerUserBarList from './MediasPerUserBarList'
 import ChartBarListLoading from './ChartBarListLoading'
 import MessagesByHourLineChart from './MessagesByHourLineChart'
+import MostUsedReactionsPieChart from './MostUsedReactionsPieChart'
 
 const chartMeta = {
   messages_per_user: {
@@ -46,6 +47,12 @@ const chartMeta = {
     xAxis: 'Hours',
     yAxis: 'Messages sent',
     Component: MessagesByHourLineChart,
+  },
+  most_used_reactions: {
+    type: 'Pie chart',
+    color: 'teal',
+    description: 'Mostra os emojis mais utilizados para reação na LSTop.',
+    Component: MostUsedReactionsPieChart,
   },
 }
 
