@@ -6,6 +6,7 @@ import MediasPerUserBarList from './MediasPerUserBarList'
 import ChartBarListLoading from './ChartBarListLoading'
 import MessagesByHourLineChart from './MessagesByHourLineChart'
 import MostUsedReactionsPieChart from './MostUsedReactionsPieChart'
+import CurrentStreakList from './CurrentStreakList'
 
 const chartMeta = {
   messages_per_user: {
@@ -54,6 +55,12 @@ const chartMeta = {
     description: 'Mostra os emojis mais utilizados para reação na LSTop.',
     Component: MostUsedReactionsPieChart,
   },
+  longest_streak: {
+    type: 'List',
+    color: 'teal',
+    description: 'Mostra o current streak da LSTop.',
+    Component: CurrentStreakList,
+  }
 }
 
 const colorMap = {
