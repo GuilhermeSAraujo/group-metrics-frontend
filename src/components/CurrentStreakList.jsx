@@ -1,97 +1,81 @@
-import { useEffect, useState } from 'react';
-import { api } from '../api/client';
-import { Box, useBreakpointValue } from '@chakra-ui/react';
-import ChartBarListLoading from './ChartBarListLoading';
-import { Chart, useChart } from '@chakra-ui/charts';
-import { Bar, BarChart, CartesianGrid, LabelList, Rectangle, XAxis, YAxis } from 'recharts';
+import { useEffect, useState } from 'react'
+import { BarList, useChart } from '@chakra-ui/charts'
+import { Stack, Text } from '@chakra-ui/react'
+import { api } from '../api/client'
+import ChartBarListLoading from './ChartBarListLoading'
 
-function getStreakColor(index) {
-    const colors = [
-        "purple.200",
-        "blue.200",
-        "cyan.200",
-        "teal.200",
-        "green.200",
-        "lime.200",
-        "yellow.200",
-        "orange.200",
-        "red.200",
-        "pink.200",
-        "gray.200",
-    ];
-
-    return colors[index % colors.length];
+function toBarListData(rows, valueKey) {
+  return rows
+    .map((row) => ({
+      name: row?.member_name?.trim() || row?.member_id || 'Desconhecido - bugou :(',
+      value: Number(row?.[valueKey]) || 0,
+    }))
+    .filter((row) => row.value > 0)
 }
 
-function toBarListData(payload) {
-    return payload.map((item, index) => ({
-        ...item,
-        member_name: item.member_name.split(" ")[0],
-        color: getStreakColor(index),
-    }));
+function StreakBarList({ data, seriesColor }) {
+  const chart = useChart({
+    sort: { by: 'value', direction: 'desc' },
+    data,
+    series: [{ name: 'name', color: seriesColor }],
+  })
+
+  return (
+    <BarList.Root chart={chart} w="full" py={2} barSize="11">
+      <BarList.Content>
+        <BarList.Bar />
+        <BarList.Value />
+      </BarList.Content>
+    </BarList.Root>
+  )
 }
 
-export default function CurrentStreakList({ seriesColor = 'teal.solid' }) {
-    const [data, setData] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+export default function CurrentStreakList({ seriesColor = 'teal.subtle' }) {
+  const [rows, setRows] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
-    useEffect(() => {
-        let cancelled = false;
+  useEffect(() => {
+    let cancelled = false
 
-        api
-            .getJson('/current-streak')
-            .then((payload) => {
-                if (cancelled || !payload || !Array.isArray(payload)) return;
-                setData(toBarListData(payload));
-            })
-            .catch(() => {
-                if (!cancelled) setData([]);
-            })
-            .finally(() => {
-                if (!cancelled) setIsLoading(false);
-            });
+    api
+      .getJson('/current-streak')
+      .then((payload) => {
+        if (cancelled || !payload || !Array.isArray(payload)) return
+        setRows(payload)
+      })
+      .catch(() => {
+        if (!cancelled) setRows([])
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false)
+      })
 
-        return () => {
-            cancelled = true;
-        };
-    }, []);
-
-    const chart = useChart({ data });
-    const chartHeight = useBreakpointValue({ base: 260, md: 320 }) ?? 260;
-    const tickFontSize = useBreakpointValue({ base: 10, md: 12 }) ?? 10;
-
-    if (isLoading) {
-        return <ChartBarListLoading seriesColor={seriesColor} />;
+    return () => {
+      cancelled = true
     }
+  }, [])
 
-    return (
-        <Box w="full" h={`${chartHeight}px`}>
-            <Chart.Root chart={chart} w="full" h="full">
-                <BarChart data={chart.data} responsive>
-                    <CartesianGrid stroke={chart.color('border.muted')} vertical={false} />
-                    <XAxis
-                        dataKey="member_name"
-                        axisLine={false}
-                        tickLine={false}
-                        angle={-45}
-                        textAnchor="end"
-                        height={80}
-                        tick={{ fontSize: tickFontSize }}
-                    />
-                    <YAxis axisLine={false} tickLine={false} domain={[0, 'dataMax']} />
-                    <Bar
-                        dataKey="current_streak"
-                        isAnimationActive={false}
-                        shape={(props) => (
-                            <Rectangle
-                                {...props}
-                                fill={chart.color(props.payload.color)}
-                            />
-                        )}
-                    />
+  if (isLoading) {
+    return <ChartBarListLoading seriesColor={seriesColor} />
+  }
 
-                </BarChart>
-            </Chart.Root>
-        </Box>
-    );
+  const currentData = toBarListData(rows, 'current_streak')
+  const maxData = toBarListData(rows, 'max_streak')
+
+  return (
+    <Stack gap={6} w="full">
+      <Stack gap={1}>
+        <Text fontSize="sm" fontWeight="700" color="gray.700">
+          Streak atual
+        </Text>
+        <StreakBarList data={currentData} seriesColor={seriesColor} />
+      </Stack>
+      <Stack gap={1}>
+        <Text fontSize="sm" fontWeight="700" color="gray.700">
+          Maior streak
+        </Text>
+        <StreakBarList data={maxData} seriesColor="purple.subtle" />
+      </Stack>
+    </Stack>
+  )
 }

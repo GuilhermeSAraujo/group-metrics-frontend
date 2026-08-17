@@ -56,9 +56,10 @@ const chartMeta = {
     Component: MostUsedReactionsPieChart,
   },
   longest_streak: {
-    type: 'List',
+    type: 'Bar list',
     color: 'teal',
-    description: 'Mostra o current streak da LSTop.',
+    description: 'Streak atual e recorde de cada membro.',
+    xAxis: 'Users',
     Component: CurrentStreakList,
   }
 }

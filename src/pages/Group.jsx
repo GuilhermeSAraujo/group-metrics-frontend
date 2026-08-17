@@ -34,7 +34,7 @@ export default function Group() {
         items: [
             { label: 'Atividade por hora', value: 'hour_activity' },
             { label: 'Reações mais usadas', value: 'most_used_reactions' },
-            { label: 'Streak mais longa', value: 'longest_streak' },
+            { label: 'Streaks', value: 'longest_streak' },
         ],
     })
 
