@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useBreakpointValue } from '@chakra-ui/react'
 import { api } from '../api/client'
 import { withQueryString } from '../api/queryParams'
 import ChartBarListLoading from './ChartBarListLoading'
@@ -25,6 +26,7 @@ export default function MessagesByHourLineChart({
 }) {
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const chartHeight = useBreakpointValue({ base: 280, md: 400 }) ?? 280
 
   useEffect(() => {
     let cancelled = false
@@ -77,7 +79,7 @@ export default function MessagesByHourLineChart({
     <div
       style={{
         width: '100%',
-        height: 400,
+        height: chartHeight,
         background: 'white',
       }}
     >

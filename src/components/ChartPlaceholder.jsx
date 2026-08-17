@@ -85,7 +85,7 @@ export default function ChartPlaceholder({ chartType, label, queryString = '' })
     >
       {/* Chart header */}
       <Flex
-        px={6}
+        px={{ base: 4, md: 6 }}
         py={4}
         borderBottomWidth="1px"
         borderColor="gray.100"

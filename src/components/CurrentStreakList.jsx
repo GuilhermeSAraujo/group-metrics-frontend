@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api/client';
-import { Box } from '@chakra-ui/react';
+import { Box, useBreakpointValue } from '@chakra-ui/react';
 import ChartBarListLoading from './ChartBarListLoading';
 import { Chart, useChart } from '@chakra-ui/charts';
 import { Bar, BarChart, CartesianGrid, LabelList, Rectangle, XAxis, YAxis } from 'recharts';
@@ -57,13 +57,15 @@ export default function CurrentStreakList({ seriesColor = 'teal.solid' }) {
     }, []);
 
     const chart = useChart({ data });
+    const chartHeight = useBreakpointValue({ base: 260, md: 320 }) ?? 260;
+    const tickFontSize = useBreakpointValue({ base: 10, md: 12 }) ?? 10;
 
     if (isLoading) {
         return <ChartBarListLoading seriesColor={seriesColor} />;
     }
 
     return (
-        <Box w="full" h="320px">
+        <Box w="full" h={`${chartHeight}px`}>
             <Chart.Root chart={chart} w="full" h="full">
                 <BarChart data={chart.data} responsive>
                     <CartesianGrid stroke={chart.color('border.muted')} vertical={false} />
@@ -74,6 +76,7 @@ export default function CurrentStreakList({ seriesColor = 'teal.solid' }) {
                         angle={-45}
                         textAnchor="end"
                         height={80}
+                        tick={{ fontSize: tickFontSize }}
                     />
                     <YAxis axisLine={false} tickLine={false} domain={[0, 'dataMax']} />
                     <Bar

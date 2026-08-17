@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
+import { useBreakpointValue } from '@chakra-ui/react'
 import { api } from '../api/client'
-import { withQueryString } from '../api/queryParams'
 import ChartBarListLoading from './ChartBarListLoading'
 
 import {
@@ -102,6 +102,9 @@ function CustomLegend({ payload }) {
 export default function MostUsedReactionsPieChart() {
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const chartHeight = useBreakpointValue({ base: 300, md: 420 }) ?? 300
+  const innerRadius = useBreakpointValue({ base: 50, md: 80 }) ?? 50
+  const outerRadius = useBreakpointValue({ base: 90, md: 145 }) ?? 90
 
   useEffect(() => {
     let cancelled = false
@@ -147,15 +150,15 @@ export default function MostUsedReactionsPieChart() {
   const total = data.reduce((sum, d) => sum + d.value, 0)
 
   return (
-    <div style={{ width: '100%', height: 420, background: 'white' }}>
+    <div style={{ width: '100%', height: chartHeight, background: 'white' }}>
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
             data={data}
             cx="50%"
             cy="45%"
-            innerRadius={80}
-            outerRadius={145}
+            innerRadius={innerRadius}
+            outerRadius={outerRadius}
             paddingAngle={3}
             dataKey="value"
             startAngle={90}

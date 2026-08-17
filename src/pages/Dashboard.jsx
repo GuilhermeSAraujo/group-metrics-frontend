@@ -11,7 +11,6 @@ import {
   Spinner,
 } from '@chakra-ui/react'
 import { SelectContent, SelectItem, SelectPositioner, SelectRoot, SelectTrigger, SelectValueText } from '../components/ui/select'
-import Sidebar from '../components/Sidebar'
 import ChartPlaceholder from '../components/ChartPlaceholder'
 import { api } from '../api/client'
 import { buildDateRangeQueryString, withQueryString } from '../api/queryParams'
@@ -146,17 +145,14 @@ export default function Dashboard() {
   )
 
   return (
-    <Flex minH="100vh" bg="gray.50" fontFamily="'IBM Plex Sans', sans-serif">
-      <Sidebar />
-
-      <Box flex="1" p={{ base: 4, md: 8 }}>
+    <>
         {/* Header */}
         <Flex
           justify="space-between"
           align={{ base: 'flex-start', sm: 'center' }}
           direction={{ base: 'column', sm: 'row' }}
-          gap={4}
-          mb={8}
+          gap={{ base: 3, md: 4 }}
+          mb={{ base: 4, md: 8 }}
         >
           <Stack gap={0}>
             <Heading
@@ -261,7 +257,7 @@ export default function Dashboard() {
         </Flex>
 
         {/* Stats Row */}
-        <Flex gap={4} mb={8} direction={{ base: 'column', sm: 'row' }}>
+        <Flex gap={{ base: 2, md: 4 }} mb={{ base: 4, md: 8 }} direction="row">
           {[
             {
               label: 'Total de Mensagens',
@@ -279,9 +275,10 @@ export default function Dashboard() {
             <Box
               key={stat.label}
               flex="1"
+              minW="0"
               bg="white"
               borderRadius="2xl"
-              p={5}
+              p={{ base: 3, md: 5 }}
               shadow="sm"
               borderWidth="1px"
               borderColor="gray.100"
@@ -300,7 +297,7 @@ export default function Dashboard() {
                     {stat.label}
                   </Text>
 
-                  <Text fontSize="2xl" fontWeight="800" color="gray.800" mt={1}>
+                  <Text fontSize={{ base: 'lg', md: '2xl' }} fontWeight="800" color="gray.800" mt={1}>
                     {stat.value ?? '—'}
                   </Text>
                 </>
@@ -315,7 +312,6 @@ export default function Dashboard() {
           label={currentChart?.label ?? 'Chart'}
           queryString={dateRangeQueryString}
         />
-      </Box>
-    </Flex>
+    </>
   )
 }

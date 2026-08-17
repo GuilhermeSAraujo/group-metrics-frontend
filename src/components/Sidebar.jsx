@@ -1,10 +1,6 @@
 import { Box, Flex, Text, Stack } from '@chakra-ui/react'
 import { useNavigate, useLocation } from 'react-router-dom'
-
-const navItems = [
-  { label: 'Dashboard', icon: '📈', path: '/dashboard' },
-  { label: 'Grupo',     icon: '📊', path: '/group'     },
-]
+import { NAV_ITEMS } from '../navItems'
 
 export default function Sidebar() {
   const navigate = useNavigate()
@@ -43,7 +39,7 @@ export default function Sidebar() {
 
       {/* Nav */}
       <Stack gap={1} flex="1">
-        {navItems.map((item) => (
+        {NAV_ITEMS.map((item) => (
           <Flex
             key={item.label}
             align="center"

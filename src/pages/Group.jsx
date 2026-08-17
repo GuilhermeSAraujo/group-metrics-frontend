@@ -17,7 +17,6 @@ import {
     SelectContent,
     SelectItem,
 } from '@chakra-ui/react'
-import Sidebar from '../components/Sidebar'
 import ChartPlaceholder from '../components/ChartPlaceholder'
 
 export default function Group() {
@@ -101,17 +100,14 @@ export default function Group() {
     }
 
     return (
-        <Flex minH="100vh" bg="gray.50" fontFamily="'IBM Plex Sans', sans-serif">
-            <Sidebar />
-
-            <Box flex="1" p={{ base: 4, md: 8 }}>
+        <>
                 {/* Header */}
                 <Flex
                     justify="space-between"
                     align={{ base: 'flex-start', sm: 'center' }}
                     direction={{ base: 'column', sm: 'row' }}
-                    gap={4}
-                    mb={8}
+                    gap={{ base: 3, md: 4 }}
+                    mb={{ base: 4, md: 8 }}
                 >
                     <Stack gap={0}>
                         <Heading
@@ -199,7 +195,6 @@ export default function Group() {
                     label={currentChart?.label ?? 'Chart'}
                     queryString={dateRangeQueryString}
                 />
-            </Box>
-        </Flex>
+        </>
     )
 }

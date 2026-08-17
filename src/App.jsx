@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
+import AppLayout from './components/AppLayout'
 import Dashboard from './pages/Dashboard'
 import Group from './pages/Group'
 
@@ -31,7 +32,8 @@ function PasswordGate({ children }) {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      minHeight: '100vh',
+      minHeight: '100dvh',
+      padding: '1rem',
       background: '#f5f5f5',
       fontFamily: 'sans-serif',
     }}>
@@ -39,13 +41,16 @@ function PasswordGate({ children }) {
         onSubmit={handleSubmit}
         style={{
           background: '#fff',
-          padding: '2rem 2.5rem',
+          padding: '2rem 1.5rem',
           borderRadius: '12px',
           boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
           display: 'flex',
           flexDirection: 'column',
           gap: '1rem',
-          minWidth: '280px',
+          width: '100%',
+          maxWidth: '320px',
+          minWidth: 0,
+          boxSizing: 'border-box',
         }}
       >
         <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 600 }}>Enter password</h2>
@@ -91,9 +96,11 @@ export default function App() {
     <PasswordGate>
       <HashRouter>
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/group" element={<Group />} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          <Route element={<AppLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/group" element={<Group />} />
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Route>
         </Routes>
       </HashRouter>
     </PasswordGate>
