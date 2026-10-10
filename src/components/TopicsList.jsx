@@ -3,6 +3,7 @@ import { Accordion, Badge, Box, Flex, Spinner, Text } from '@chakra-ui/react'
 import { api } from '../api/client'
 import { withQueryString } from '../api/queryParams'
 import ChartBarListLoading from './ChartBarListLoading'
+import WindowMessagesDialog from './WindowMessagesDialog'
 
 const saoPaulo = { timeZone: 'America/Sao_Paulo' }
 const dateFmt = new Intl.DateTimeFormat('pt-BR', {
@@ -25,6 +26,7 @@ function formatWindow(row) {
 
   return {
     id: row.id,
+    windowIds: Array.isArray(row.window_ids) && row.window_ids.length > 0 ? row.window_ids : [row.id],
     date: startDate === endDate ? startDate : `${startDate} – ${endDate}`,
     range: `${timeFmt.format(start)} – ${timeFmt.format(end)}`,
     messagesLabel: messages === 1 ? '1 mensagem' : `${messages} mensagens`,
@@ -38,6 +40,7 @@ export default function TopicsList({ queryString = '' }) {
   const [error, setError] = useState(null)
   const [open, setOpen] = useState([])
   const [windowsByTopic, setWindowsByTopic] = useState({})
+  const [selectedWindow, setSelectedWindow] = useState(null)
   const windowsRef = useRef({})
 
   useEffect(() => {
@@ -112,6 +115,7 @@ export default function TopicsList({ queryString = '' }) {
   const maxTotal = Math.max(...topics.map((topic) => Number(topic.total) || 0), 1)
 
   return (
+    <>
     <Accordion.Root
       multiple
       collapsible
@@ -184,6 +188,11 @@ export default function TopicsList({ queryString = '' }) {
                     {windows.rows.map((window) => (
                       <Flex
                         key={window.id}
+                        as="button"
+                        type="button"
+                        w="full"
+                        textAlign="left"
+                        cursor="pointer"
                         justify="space-between"
                         align="center"
                         gap={3}
@@ -191,6 +200,8 @@ export default function TopicsList({ queryString = '' }) {
                         py={2}
                         bg="gray.50"
                         borderRadius="lg"
+                        _hover={{ bg: 'purple.50' }}
+                        onClick={() => setSelectedWindow(window)}
                       >
                         <Text fontSize="sm" color="gray.700" fontWeight="600">
                           {window.date}
@@ -212,5 +223,7 @@ export default function TopicsList({ queryString = '' }) {
         )
       })}
     </Accordion.Root>
+    <WindowMessagesDialog window={selectedWindow} onClose={() => setSelectedWindow(null)} />
+    </>
   )
 }
