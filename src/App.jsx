@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import AppLayout from './components/AppLayout'
 import Dashboard from './pages/Dashboard'
 import Group from './pages/Group'
+import Topics from './pages/Topics'
 
 const CORRECT_PASSWORD = '!123'
 const STORAGE_KEY = 'lstop-ts-key'
@@ -99,6 +100,7 @@ export default function App() {
           <Route element={<AppLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/group" element={<Group />} />
+            <Route path="/topics" element={<Topics />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Route>
         </Routes>
