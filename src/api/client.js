@@ -1,4 +1,4 @@
-const DEFAULT_BASE = 'https://goal-bottom-frame-alice.trycloudflare.com'
+const DEFAULT_BASE = 'https://eventually-acoustic-crimes-softball.trycloudflare.com'
 
 /**
  * @param {string} [baseUrl] - API origin (no trailing slash). Override with VITE_API_BASE_URL.
